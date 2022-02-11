@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1023547289875",
+    "project_id": "crazy-notes-12b1d",
+    "storage_bucket": "crazy-notes-12b1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1023547289875:android:2612ec0e22cdc61523eae6",
+        "android_client_info": {
+          "package_name": "com.crazylab.crazy_notes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1023547289875-mjk48s5nihvf6gs4qo949vn4991j15j2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.crazylab.crazy_notes",
+            "certificate_hash": "9ba54f37f4c3a0cb5c1941a2cade4f360b798647"
+          }
+        },
+        {
+          "client_id": "1023547289875-g3rfqa47jgf6kqleci53mgh3mcjfkk7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWsGLZkhAaPvGeWa7D4Ux6lq68pYRIq8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1023547289875-g3rfqa47jgf6kqleci53mgh3mcjfkk7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
