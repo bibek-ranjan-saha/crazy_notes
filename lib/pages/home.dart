@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crazy_notes/controllers/google_auth.dart';
-import 'package:crazy_notes/menu_item.dart';
+import 'package:crazy_notes/menus/menu_item.dart';
 import 'package:crazy_notes/pages/add_note.dart';
 import 'package:crazy_notes/pages/profile.dart';
 import 'package:crazy_notes/pages/setting.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-import '../menu_items.dart';
+import 'package:crazy_notes/menus/menu_items.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);

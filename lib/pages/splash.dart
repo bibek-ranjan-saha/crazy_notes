@@ -39,7 +39,7 @@ class _SplashScreenState extends State<SplashScreen> {
       body: SizedBox(
         height: double.infinity,
         width: double.infinity,
-        child: Lottie.asset('assets/images/confusion.json', fit: BoxFit.cover),
+        child: Lottie.asset('assets/lottie/confusion.json', fit: BoxFit.cover),
         // Text(
         //   "Hey,\nNotes App Welcomes You",
         //   style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold),
