@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crazy_notes/controllers/google_auth.dart';
 import 'package:crazy_notes/menus/menu_item.dart';
+import 'package:crazy_notes/menus/menu_items.dart';
 import 'package:crazy_notes/pages/add_note.dart';
 import 'package:crazy_notes/pages/profile.dart';
 import 'package:crazy_notes/pages/setting.dart';
@@ -10,7 +11,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:share/share.dart';
-import 'package:crazy_notes/menus/menu_items.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => const Profile()))
                 .then((value) {
-              setState(() {});
+              //setState(() {});
             });
           },
           child: Padding(
@@ -62,15 +62,15 @@ class _MyHomePageState extends State<MyHomePage> {
               tag: "image",
               child: ClipOval(
                 child: CachedNetworkImage(
+                  placeholder: (context, data) => const Icon(Icons.people),
                   imageUrl:
                       //"${auth.currentUser!.photoURL}",
                       photoURL,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                          value: downloadProgress.progress),
+                  // progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  //     CircularProgressIndicator(
+                  //         value: downloadProgress.progress),
                   errorWidget: (context, url, error) => const Icon(
-                    Icons.account_circle_outlined,
-                    color: Colors.limeAccent,
+                    Icons.error_outline_sharp,
                   ),
                   height: 150,
                   width: 150,
@@ -88,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         .push(MaterialPageRoute(
                             builder: (context) => const AppSettings()))
                         .then((value) {
-                      setState(() {});
+                      //setState(() {});
                     });
                     break;
                   case "Share":
@@ -157,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       ref: snapshot.data!.docs[index].reference,
                                     )))
                             .then((value) {
-                          setState(() {});
+                          //setState(() {});
                         });
                       },
                       child: Padding(
@@ -251,7 +251,7 @@ class _MyHomePageState extends State<MyHomePage> {
               .push(MaterialPageRoute(
                   builder: (context) => const AddNote(desc: '', title: '')))
               .then((value) {
-            setState(() {});
+            //setState(() {});
           });
         },
         child: const Icon(Icons.add_outlined),

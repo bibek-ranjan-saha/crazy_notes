@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1023547289875-mjk48s5nihvf6gs4qo949vn4991j15j2.apps.googleusercontent.com",
+          "client_id": "1023547289875-pk9hlulv7kghvb455oiotol2k6s27leq.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.crazylab.crazy_notes",
-            "certificate_hash": "9ba54f37f4c3a0cb5c1941a2cade4f360b798647"
+            "certificate_hash": "a6fe8a19f686208a6bccb1003fe8f77465dfc774"
           }
         },
         {

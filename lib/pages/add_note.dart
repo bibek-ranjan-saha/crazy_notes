@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crazy_notes/controllers/google_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 class AddNote extends StatefulWidget {
   const AddNote({Key? key, required this.title, required this.desc, this.ref})
@@ -28,7 +29,9 @@ class _AddNoteState extends State<AddNote> {
   @override
   Widget build(BuildContext context) {
 
-    print(desc.length);
+    if (kDebugMode) {
+      print(desc.length);
+    }
 
     return SafeArea(
         child: Scaffold(

@@ -1,28 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crazy_notes/controllers/theme_manager.dart';
 import 'package:crazy_notes/pages/home.dart';
 import 'package:crazy_notes/pages/login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+ThemeManager themeManager = ThemeManager();
 
 GoogleSignIn googleSignIn = GoogleSignIn();
 
 FirebaseAuth auth = FirebaseAuth.instance;
 FirebaseFirestore fireStoreInstance = FirebaseFirestore.instance;
 CollectionReference users = fireStoreInstance.collection('users');
-
-String email = "";
-String name = "";
-String photoURL = "";
-
-getProfileData() async {
-  var profile = await users.doc(auth.currentUser?.uid).get();
-    email = profile["email"];
-    name = profile["name"];
-    photoURL = profile["photoURL"];
-}
 
 signInWithGoogle(BuildContext context) async {
   try {
@@ -32,28 +25,39 @@ signInWithGoogle(BuildContext context) async {
     final GoogleSignInAccount? googleSignInAccount =
         await googleSignIn.signIn();
 
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (builder) {
-          return AlertDialog(
-              shape: const CircleBorder(),
-              elevation: 20,
-              content: Builder(
-                builder: (ctx) {
-                  return Container(
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    width: 40,
-                    height: 40,
-                    child: const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.orange,
-                      ),
-                    ),
-                  );
-                },
-              ));
-        });
+    // showDialog(
+    //     barrierDismissible: false,
+    //     context: context,
+    //     builder: (builder) {
+    //       return AlertDialog(
+    //           shape: const CircleBorder(),
+    //           elevation: 20,
+    //           content: Builder(
+    //             builder: (ctx) {
+    //               return Container(
+    //                 decoration: const BoxDecoration(shape: BoxShape.circle),
+    //                 width: 40,
+    //                 height: 40,
+    //                 child: const Center(
+    //                   child: CircularProgressIndicator(
+    //                     color: Colors.orange,
+    //                   ),
+    //                 ),
+    //               );
+    //             },
+    //           ));
+    //     });
+    EasyLoading.instance
+      ..indicatorType = EasyLoadingIndicatorType.ring
+      ..indicatorSize = 45.0
+      ..radius = 10.0
+      ..maskColor = Colors.lightGreenAccent
+      ..userInteractions = false
+      ..backgroundColor = Colors.lightGreenAccent
+      ..dismissOnTap = false;
+    EasyLoading.show(
+      status: "Loading...",
+    );
     if (kDebugMode) {
       print("done");
     }
@@ -93,6 +97,7 @@ signInWithGoogle(BuildContext context) async {
         print("done");
       }
       users.doc(user?.uid).get().then((value) async {
+        EasyLoading.dismiss();
         if (value.exists) {
           //old account so just updating
           value.reference.update(userData);
@@ -104,11 +109,12 @@ signInWithGoogle(BuildContext context) async {
           print("done login");
         }
         Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => const MyHomePage()),
+            MaterialPageRoute(builder: (context) => MyHomePage()),
             (route) => false);
       });
     }
   } on PlatformException catch (e) {
+    EasyLoading.dismiss();
     if (kDebugMode) {
       print(e.message);
     }
@@ -129,14 +135,25 @@ signInWithGoogle(BuildContext context) async {
 }
 
 signOut(BuildContext context) async {
+  EasyLoading.instance
+    ..indicatorType = EasyLoadingIndicatorType.ring
+    ..indicatorSize = 45.0
+    ..radius = 10.0
+    ..userInteractions = false
+    ..dismissOnTap = false;
+  EasyLoading.show(
+    status: "Loading...",
+  );
   try {
     await googleSignIn.disconnect().whenComplete(() async {
       auth.signOut();
+      //EasyLoading.dismiss();
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => const LoginPage()),
           (route) => false);
     });
   } on Exception {
+    //EasyLoading.dismiss();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: const Text('sorry sign out failed'),
       action: SnackBarAction(
