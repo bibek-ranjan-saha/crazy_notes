@@ -20,7 +20,6 @@ class _LoginPageState extends State<LoginPage> {
             "📔",
             style: TextStyle(
                 fontSize: 154,
-                color: Colors.white,
                 fontWeight: FontWeight.bold),
           ),
           const Padding(
@@ -30,7 +29,6 @@ class _LoginPageState extends State<LoginPage> {
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 28,
-                  color: Colors.blueGrey,
                   fontWeight: FontWeight.bold),
             ),
           ),

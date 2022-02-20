@@ -1,6 +1,5 @@
+import 'package:crazy_notes/controllers/theme_manager.dart';
 import 'package:flutter/material.dart';
-import '../controllers/google_auth.dart';
-import '../controllers/theme_manager.dart';
 
 class AppSettings extends StatefulWidget {
   const AppSettings({Key? key}) : super(key: key);
@@ -11,24 +10,12 @@ class AppSettings extends StatefulWidget {
 
 class _SettingsState extends State<AppSettings> {
   bool enableAuth = false;
-
-  @override
-  void dispose() {
-    themeManager.removeListener(themeListener);
-    super.dispose();
-  }
+  bool mode = false;
 
   @override
   void initState() {
-    themeManager = ThemeManager();
-    themeManager.addListener(themeListener);
+    mode = ThemeBuilder.of(context).getBrightness();
     super.initState();
-  }
-
-  themeListener() {
-    if (mounted) {
-      setState(() {});
-    }
   }
 
   @override
@@ -73,10 +60,9 @@ class _SettingsState extends State<AppSettings> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
-                      themeManager.themeMode == ThemeMode.dark
-                          ? "  Disable dark mode"
-                          : "  Enable dark mode",
+                    child: Text(mode
+                          ? "  change to light mode"
+                          : "  change to dark mode",
                       style: const TextStyle(
                           fontSize: 22,
                           color: Colors.blueGrey,
@@ -85,10 +71,11 @@ class _SettingsState extends State<AppSettings> {
                     ),
                   ),
                   Switch.adaptive(
-                      value: themeManager.themeMode == ThemeMode.dark,
+                      value: mode,
                       onChanged: (value) {
                         setState(() {
-                          themeManager.toggleTheme(value);
+                          ThemeBuilder.of(context).changeTheme();
+                          mode = !mode;
                         });
                       }),
                 ],

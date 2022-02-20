@@ -15,7 +15,7 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Hero(
               tag: "image",
@@ -26,19 +26,20 @@ class _ProfileState extends State<Profile> {
                   fit: BoxFit.cover,
                   imageUrl: "${auth.currentUser!.photoURL}",
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(value: downloadProgress.progress),
+                      CircularProgressIndicator(
+                          value: downloadProgress.progress),
                   errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),
             Text(
-              "${auth.currentUser!.displayName}",
+              "Name : ${auth.currentUser!.displayName}\n\nE-mail : ${auth.currentUser!.email}",
               style: const TextStyle(
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.bold,
-                  fontSize: 22),
+                  fontSize: 26),
             ),
-            ElevatedButton.icon(
+            OutlinedButton.icon(
               onPressed: () {
                 signOut(context);
               },
@@ -47,7 +48,7 @@ class _ProfileState extends State<Profile> {
                 "log out",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              style: ElevatedButton.styleFrom(
+              style: OutlinedButton.styleFrom(
                   minimumSize: const Size(250, 56),
                   primary: Colors.redAccent.shade100),
             )

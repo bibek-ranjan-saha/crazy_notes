@@ -48,12 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         leading: GestureDetector(
           onTap: () {
             Navigator.of(context)
                 .push(MaterialPageRoute(builder: (context) => const Profile()))
                 .then((value) {
-              //setState(() {});
+              setState(() {});
             });
           },
           child: Padding(
@@ -64,12 +65,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: CachedNetworkImage(
                   placeholder: (context, data) => const Icon(Icons.people),
                   imageUrl:
-                      //"${auth.currentUser!.photoURL}",
-                      photoURL,
+                  //"${auth.currentUser!.photoURL}",
+                  photoURL,
                   // progressIndicatorBuilder: (context, url, downloadProgress) =>
                   //     CircularProgressIndicator(
                   //         value: downloadProgress.progress),
-                  errorWidget: (context, url, error) => const Icon(
+                  errorWidget: (context, url, error) =>
+                  const Icon(
                     Icons.error_outline_sharp,
                   ),
                   height: 150,
@@ -86,9 +88,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   case "Settings":
                     Navigator.of(context)
                         .push(MaterialPageRoute(
-                            builder: (context) => const AppSettings()))
+                        builder: (context) => const AppSettings()))
                         .then((value) {
-                      //setState(() {});
+                      setState(() {});
                     });
                     break;
                   case "Share":
@@ -105,11 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     break;
                 }
               },
-              itemBuilder: (context) => [
-                    ...MenuItems.item.map(buildItem).toList(),
-                  ])
+              itemBuilder: (context) =>
+              [
+                ...MenuItems.item.map(buildItem).toList(),
+              ])
         ],
-        backgroundColor: Colors.blueGrey,
         title: const Text("Crazy Notes"),
         automaticallyImplyLeading: false,
       ),
@@ -125,8 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     "You have no notes to show create new from the + button below",
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 22,
-                        color: Colors.black26),
+                        fontSize: 22,),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -143,21 +144,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     String title = snapshot.data!.docs[index]["title"];
                     String message = snapshot.data!.docs[index]["description"];
                     DateTime date =
-                        snapshot.data!.docs[index]["created"].toDate();
+                    snapshot.data!.docs[index]["created"].toDate();
                     return GestureDetector(
                       onTap: () {
                         Navigator.of(context)
                             .push(MaterialPageRoute(
-                                builder: (context) => ViewNote(
-                                      title: title,
-                                      desc: message,
-                                      time: DateFormat.yMMMd()
-                                          .add_jm()
-                                          .format(date),
-                                      ref: snapshot.data!.docs[index].reference,
-                                    )))
+                            builder: (context) =>
+                                ViewNote(
+                                  title: title,
+                                  desc: message,
+                                  time: DateFormat.yMMMd()
+                                      .add_jm()
+                                      .format(date),
+                                  ref: snapshot.data!.docs[index].reference,
+                                )))
                             .then((value) {
-                          //setState(() {});
+                          setState(() {});
                         });
                       },
                       child: Padding(
@@ -181,12 +183,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                         .add_jm()
                                         .format(date),
                                     child: Material(
-                                      color: Colors.white,
                                       child: Text(
                                         title,
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.black,
                                             fontSize: 22),
                                       ),
                                     ),
@@ -245,11 +245,10 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blueGrey,
         onPressed: () {
           Navigator.of(context)
               .push(MaterialPageRoute(
-                  builder: (context) => const AddNote(desc: '', title: '')))
+              builder: (context) => const AddNote(desc: '', title: '')))
               .then((value) {
             //setState(() {});
           });
@@ -279,13 +278,13 @@ class TrianglePainter extends CustomPainter {
   }
 }
 
-PopupMenuItem<MenuItem> buildItem(MenuItem item) => PopupMenuItem(
+PopupMenuItem<MenuItem> buildItem(MenuItem item) =>
+    PopupMenuItem(
       value: item,
       child: Row(
         children: [
           Icon(
             item.icon,
-            color: Colors.black,
             size: 20,
           ),
           const SizedBox(

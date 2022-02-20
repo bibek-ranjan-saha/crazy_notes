@@ -105,10 +105,8 @@ class _ViewNoteState extends State<ViewNote> {
                         child: Text(
                           widget.title,
                           style: const TextStyle(
-                            inherit: false,
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
-                            color: Colors.black87,
                           ),
                         ),
                       ),
@@ -148,7 +146,6 @@ class _ViewNoteState extends State<ViewNote> {
                               style: const TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal,
-                                color: Colors.black87,
                               ),
                               text: widget.desc,
                             ),

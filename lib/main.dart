@@ -1,4 +1,4 @@
-import 'package:crazy_notes/constants/colors.dart';
+import 'package:crazy_notes/controllers/theme_manager.dart';
 import 'package:crazy_notes/pages/home.dart';
 import 'package:crazy_notes/pages/login.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -18,14 +18,36 @@ main() async {
       //     appId: "1:1023547289875:web:450fd2e52ef8d7b923eae6",
       // ),
       );
+  runApp(const MyApp());
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   bool result = auth.currentUser?.uid != null;
-  runApp(
-    MaterialApp(
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        themeMode: themeManager.themeMode,
-        builder: EasyLoading.init(),
-        debugShowCheckedModeBanner: false,
-        home: result ? const MyHomePage() : const LoginPage()),
-  );
+
+  @override
+  Widget build(BuildContext context) {
+    return ThemeBuilder(builder: (context, _brightness) {
+      EasyLoading.instance
+        ..indicatorType = EasyLoadingIndicatorType.ring
+        ..loadingStyle = EasyLoadingStyle.dark
+        ..indicatorSize = 45.0
+        ..radius = 10.0
+        ..maskColor = Colors.blue.withOpacity(0.5)
+        ..userInteractions = true
+        ..dismissOnTap = false;
+      return MaterialApp(
+          theme:
+              ThemeData(primarySwatch: Colors.deepOrange, brightness: _brightness),
+          builder: EasyLoading.init(),
+          debugShowCheckedModeBanner: false,
+          home: result ? const MyHomePage() : const LoginPage());
+    });
+  }
 }
