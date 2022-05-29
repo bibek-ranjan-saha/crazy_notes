@@ -50,7 +50,8 @@ class _ViewNoteState extends State<ViewNote> {
                     Row(children: [
                       ElevatedButton(
                         onPressed: () {
-                          Share.share("${widget.title} \n${widget.desc}");
+                          Share.share(
+                              "title : ${widget.title}\n\nmessage : ${widget.desc}\n\n\n\n\tShared via : Notes App (created by Bibek Ranjan Saha)");
                         },
                         child: const Icon(Icons.share_sharp),
                         style: ElevatedButton.styleFrom(
@@ -130,17 +131,19 @@ class _ViewNoteState extends State<ViewNote> {
                             child: SelectableLinkify(
                               scrollPhysics: const BouncingScrollPhysics(),
                               onOpen: (link) async {
-                                // if (await canLaunch(link.url)) {
-                                if (link.url.contains("mailto:")) {
-                                  String mail = link.url +
-                                      "?subject=${widget.title}&body=${widget.desc}\n\n\n\n\tShared via : Notes App (created by bibek ranjan saha)";
-                                  await launch(mail);
-                                } else {
+                                if (await canLaunch(link.url)) {
                                   await launch(link.url);
+                                } else {
+                                  if (link.url.contains("mailto:")) {
+                                    String mail = link.url +
+                                        "?subject=${widget.title}&body=${widget.desc}\n\n\n\n\tShared via : Notes App (created by Bibek Ranjan Saha)";
+                                    await launch(mail);
+                                  } else {
+                                    if (kDebugMode) {
+                                      print("can not launch $link");
+                                    }
+                                  }
                                 }
-                                // } else {
-                                //   throw 'Could not launch $link';
-                                // }
                               },
                               options: const LinkifyOptions(humanize: false),
                               style: const TextStyle(

@@ -57,6 +57,7 @@ signInWithGoogle(BuildContext context) async {
       print(e.message);
     }
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      behavior: SnackBarBehavior.floating,
       content:
           Text('sorry sign in failed due to ${e.code.replaceAll("_", " ")}'),
       action: SnackBarAction(
@@ -87,6 +88,7 @@ signOut(BuildContext context) async {
   } on Exception {
     EasyLoading.showError("failed");
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      behavior: SnackBarBehavior.floating,
       content: const Text('sorry sign out failed'),
       action: SnackBarAction(
         label: 'retry',

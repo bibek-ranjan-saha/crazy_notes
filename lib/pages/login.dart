@@ -1,7 +1,6 @@
 import 'package:crazy_notes/controllers/google_auth.dart';
 import 'package:flutter/material.dart';
 
-
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -18,18 +17,14 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           const Text(
             "📔",
-            style: TextStyle(
-                fontSize: 154,
-                fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 154, fontWeight: FontWeight.bold),
           ),
           const Padding(
             padding: EdgeInsets.all(8.0),
             child: Text(
-              "Create an Account to join the CrazyCommunity",
+              "Create an Account to join the Crazy-Community",
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
             ),
           ),
           ElevatedButton(

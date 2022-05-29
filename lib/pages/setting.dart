@@ -1,5 +1,7 @@
 import 'package:crazy_notes/controllers/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:switcher_button/switcher_button.dart';
 
 class AppSettings extends StatefulWidget {
   const AppSettings({Key? key}) : super(key: key);
@@ -9,13 +11,22 @@ class AppSettings extends StatefulWidget {
 }
 
 class _SettingsState extends State<AppSettings> {
+  late SharedPreferences prefs;
   bool enableAuth = false;
   bool mode = false;
 
   @override
   void initState() {
-    mode = ThemeBuilder.of(context).getBrightness();
     super.initState();
+    getInstance();
+    mode = ThemeBuilder.of(context).getBrightness();
+  }
+
+  getInstance() async {
+    setState(() async {
+      prefs = await SharedPreferences.getInstance();
+      enableAuth = prefs.getBool("auth") ?? false;
+    });
   }
 
   @override
@@ -30,55 +41,68 @@ class _SettingsState extends State<AppSettings> {
         child: Column(
           children: [
             Card(
-              elevation: 18,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      enableAuth
-                          ? "  Disable local auth methods"
-                          : "  Enable local auth method",
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w700),
-                      maxLines: 1,
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        // enableAuth
+                        //     ? "  Disable local auth methods"
+                        //     : "  Enable local auth method",
+                        "use biometric authentication",
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w700),
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                  Switch.adaptive(
-                      value: enableAuth,
-                      onChanged: (value) {
-                        setState(() {
-                          enableAuth = !enableAuth;
-                        });
-                      }),
-                ],
+                    SwitcherButton(
+                        value: enableAuth,
+                        onColor: Colors.black,
+                        offColor: Colors.limeAccent,
+                        onChange: (value) async {
+                          setState(() {
+                            enableAuth = !enableAuth;
+                          });
+                          await prefs.setBool("auth", enableAuth);
+                        }),
+                  ],
+                ),
               ),
             ),
+            const SizedBox(height: 10,),
             Card(
-              elevation: 18,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(mode
-                          ? "  change to light mode"
-                          : "  change to dark mode",
-                      style: const TextStyle(
-                          fontSize: 22,
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.w700),
-                      maxLines: 1,
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  children: [
+                    const Expanded(
+                      child: Text(
+                        // !mode ? "  turn on dark mode" : "  turn off dark mode",
+                        "wanna use dark mode",
+                        style: TextStyle(
+                            fontSize: 22,
+                            color: Colors.blueGrey,
+                            fontWeight: FontWeight.w700),
+                        maxLines: 1,
+                      ),
                     ),
-                  ),
-                  Switch.adaptive(
-                      value: mode,
-                      onChanged: (value) {
-                        setState(() {
-                          ThemeBuilder.of(context).changeTheme();
-                          mode = !mode;
-                        });
-                      }),
-                ],
+                    SwitcherButton(
+                        value: mode,
+                        onColor: Colors.black,
+                        offColor: Colors.limeAccent,
+                        onChange: (value) {
+                          setState(() {
+                            ThemeBuilder.of(context).changeTheme();
+                            mode = !mode;
+                          });
+                        }),
+                  ],
+                ),
               ),
             )
           ],

@@ -1,15 +1,19 @@
+import 'package:crazy_notes/controllers/local_home_controller.dart';
 import 'package:crazy_notes/controllers/theme_manager.dart';
 import 'package:crazy_notes/pages/home.dart';
 import 'package:crazy_notes/pages/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'controllers/google_auth.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   //FlutterNativeSplash.removeAfter(initialization);
+  SharedPreferences prefs = await SharedPreferences.getInstance();
   await Firebase.initializeApp(
       // options: const FirebaseOptions(
       //     apiKey: "AIzaSyDIBITChHcPb1C9KAglFM2gAfewibrQ1Kw",
@@ -30,6 +34,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool result = auth.currentUser?.uid != null;
+  late bool isLocalAuthenticated;
+
+
+  @override
+  void initState() {
+    setupAuth();
+    super.initState();
+  }
+
+  setupAuth() async
+  {
+    // SharedPreferences prefs = await SharedPreferences.getInstance();
+    // bool toAuth = prefs.getBool("auth") ?? false;
+    await LocalAuthController().authenticateUser();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +62,19 @@ class _MyAppState extends State<MyApp> {
         ..userInteractions = true
         ..dismissOnTap = false;
       return MaterialApp(
-          theme:
-              ThemeData(primarySwatch: Colors.deepOrange, brightness: _brightness),
+          theme: ThemeData(
+            floatingActionButtonTheme:
+                const FloatingActionButtonThemeData(backgroundColor: Colors.limeAccent),
+            primarySwatch: Colors.lime,
+            brightness: _brightness,
+            iconTheme: IconThemeData(
+                color: _brightness == ThemeMode.dark
+                    ? Colors.white
+                    : Colors.black),
+            popupMenuTheme: PopupMenuThemeData(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15))),
+          ),
           builder: EasyLoading.init(),
           debugShowCheckedModeBanner: false,
           home: result ? const MyHomePage() : const LoginPage());
